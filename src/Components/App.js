@@ -1,7 +1,8 @@
 import Test from "./Test";
-
 function App() {
-  return <Test />;
+  return <>
+  <Test />
+  </>;
 }
 
 export default App;
