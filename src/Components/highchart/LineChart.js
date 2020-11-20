@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
-import Highcharts from 'highcharts/highstock'
-import HighchartsReact from 'highcharts-react-official'
+import React, {useState} from "react";
+import HighchartsReact from "highcharts-react-official";
+import Highcharts from "highcharts/highstock";
 
 const LineChart = ({ result }) => {
-
   const time = result.map(data => data.time)
   const EC_slab1 = result.map(data => data.EC_slab1)
   const EC_slab2 = result.map(data => data.EC_slab2)
@@ -22,14 +21,22 @@ const LineChart = ({ result }) => {
   const RadSum = result.map(data => data.RadSum)
   const Tout = result.map(data => data.Tout)
 
-  const [options, setOptions] = useState({
+  const [changeTooltip, setChangeTooltip] = useState(true)
+  const options = {
+    chart : {
+      zoomType: 'x'
+    },
+    tooltip: {
+      enabled: changeTooltip
+    },
     title : {
       text: "chart"
       },
       xAxis: {
         categories : time
       },
-      series: [{
+      series: [
+        {
         name: "EC_slab1",
         data : EC_slab1
       },
@@ -92,11 +99,21 @@ const LineChart = ({ result }) => {
       {
         name: "Tout",
         data : Tout
-      }]
-    });
+      }
+      ]}
 
-  return <HighchartsReact highcharts={Highcharts} options={options}>
-  </HighchartsReact>
+  function TooltipSwitch({tooltip}){
+    console.log(tooltip.enabled)
+    return function(event){
+      return setChangeTooltip(!tooltip.enabled)
+    }
+  } 
+  return (
+    <>
+    <button onClick={(TooltipSwitch(options))}>tooltip {options.tooltip.enabled ? "off" : "on"}</button>
+    <HighchartsReact highcharts={Highcharts} options={options} />
+    </>
+  )
   }
 
 export default LineChart;

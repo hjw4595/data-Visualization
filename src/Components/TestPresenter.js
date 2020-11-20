@@ -6,7 +6,6 @@ const TestPresenter = ({result, loading}) =>
       "loding"
   ) : (
       <div>
-          {console.log(result)}
         <LineChart result={result} />
       </div>
     );
