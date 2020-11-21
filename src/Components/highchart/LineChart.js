@@ -1,7 +1,14 @@
 import React, {useState} from "react";
 import HighchartsReact from "highcharts-react-official";
-import Highcharts from "highcharts/highstock";
+import Highcharts from "highcharts";
+import styled from "styled-components";
 
+require("highcharts/modules/exporting")(Highcharts);
+require("highcharts/modules/export-data")(Highcharts);
+
+const Container = styled.div`
+  width: 100%;
+`
 const LineChart = ({ chartData }) => {
   const dateTime = chartData.map(data => data.time)
   const EC_slab1 = chartData.map(data => data.EC_slab1)
@@ -23,6 +30,19 @@ const LineChart = ({ chartData }) => {
 
   const [changeTooltip, setChangeTooltip] = useState(true)
   const options = {
+    exporting: {
+      enabled: true,
+      buttons: {
+          contextButton: {
+              menuItems: [{
+                  text: 'CSV file Download',
+                  onclick: function() {
+                    console.log(this.getCSV());
+                  }
+              }]
+          }
+      }
+  },
     chart : {
       zoomType: 'x'
     },
@@ -99,19 +119,20 @@ const LineChart = ({ chartData }) => {
       {
         name: "Tout",
         data : Tout
-      }
-      ]}
+      }]
+    }
 
   function TooltipSwitch({tooltip}){
     return function(event){
       return setChangeTooltip(!tooltip.enabled)
     }
   } 
+
   return (
-    <>
+    <Container>
     <button onClick={(TooltipSwitch(options))}>tooltip {options.tooltip.enabled ? "off" : "on"}</button>
     <HighchartsReact highcharts={Highcharts} options={options} />
-    </>
+    </Container>
   )
   }
 

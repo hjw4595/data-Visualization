@@ -1,10 +1,10 @@
 // eslint-disable-next-line import/no-anonymous-default-export
-import React, { Component } from "react";
+import React, { useState } from "react";
 import MainPagePresenter from "./MainPagePresenter";
-import chartData from "../data.json"
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
-// fake data generator
+import chartData from "../data.json"
+
 const dataNumber =[
   {
     data : chartData.data0
@@ -12,101 +12,59 @@ const dataNumber =[
     data : chartData.data1
   }
 ];
-const getItems = count =>
-  Array.from({ length: count }, (v, k) => k).map(k => ({
-    id: `${k}`,
-    content : dataNumber[k]
-  }));
+const initial = Array.from({ length: 2 }, (v, k) => k).map(k => {
+  const custom = {
+    id: `id-${k}`,
+    content: dataNumber[k]
+  };
+  return custom;
+});
 
-// a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
-
   return result;
 };
 
-const grid = 8;
-
-const getItemStyle = (isDragging, draggableStyle) => ({
-  // some basic styles to make the items look a bit nicer
-  userSelect: "none",
-  padding: grid * 2,
-  margin: `0 0 ${grid}px 0`,
-
-  // change background colour if dragging
-  background: isDragging ? "lightgreen" : "grey",
-
-  // styles we need to apply on draggables
-  ...draggableStyle
+const DataList = React.memo(function dataList({ datas }) {
+  return datas.map((data, index) => (
+    <MainPagePresenter data={data} index={index} key={data.id} />
+  ));
 });
 
-const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
-  padding: grid,
-});
+function MainPage() {
+  const [state, setState] = useState({ datas: initial });
 
-class MainPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: getItems(dataNumber.length),
-    };
-    this.onDragEnd = this.onDragEnd.bind(this);
-  }
-
-  onDragEnd(result) {
-    // dropped outside the list
+  function onDragEnd(result) {
     if (!result.destination) {
       return;
     }
 
-    const items = reorder(
-      this.state.items,
+    if (result.destination.index === result.source.index) {
+      return;
+    }
+
+    const datas = reorder(
+      state.datas,
       result.source.index,
       result.destination.index
     );
 
-    this.setState({
-      items,
-    });
+    setState({ datas });
   }
 
-  render() {
-    return (
-      <DragDropContext onDragEnd={this.onDragEnd}>
-        <Droppable droppableId="droppable">
-          {(provided, snapshot) => (
-            <div
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              style={getListStyle(snapshot.isDraggingOver)}
-            >
-              {this.state.items.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      style={getItemStyle(
-                        snapshot.isDragging,
-                        provided.draggableProps.style
-                      )}
-                    >
-                      <MainPagePresenter chartData={item.content.data} />
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-    );
-  }
+  return (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId="list">
+        {provided => (
+          <div ref={provided.innerRef} {...provided.droppableProps}>
+            <DataList datas={state.datas} />
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
+  );
 }
-
 export default MainPage;
