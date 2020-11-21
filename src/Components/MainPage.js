@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import MainPagePresenter from "./MainPagePresenter";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
-import chartData from "../data.json"
+import chartData from "../Components/JsonData/data.json"
 
 const dataNumber =[
   {

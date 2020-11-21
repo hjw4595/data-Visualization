@@ -31,16 +31,12 @@ const LineChart = ({ chartData }) => {
   const [changeTooltip, setChangeTooltip] = useState(true)
   const options = {
     exporting: {
-      enabled: true,
+      menuItemDefinitions: {
+      },
       buttons: {
-          contextButton: {
-              menuItems: [{
-                  text: 'CSV file Download',
-                  onclick: function() {
-                    console.log(this.getCSV());
-                  }
-              }]
-          }
+        contextButton: {
+            menuItems: ['downloadCSV']
+        }
       }
   },
     chart : {
@@ -50,7 +46,7 @@ const LineChart = ({ chartData }) => {
       enabled: changeTooltip
     },
     title : {
-      text: "chart"
+      text: "MY Chart"
       },
       xAxis: {
         categories : dateTime
