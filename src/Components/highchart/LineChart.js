@@ -2,24 +2,24 @@ import React, {useState} from "react";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highstock";
 
-const LineChart = ({ result }) => {
-  const time = result.map(data => data.time)
-  const EC_slab1 = result.map(data => data.EC_slab1)
-  const EC_slab2 = result.map(data => data.EC_slab2)
-  const EC_drain_PC = result.map(data => data.EC_drain_PC)
-  const WC_slab1 = result.map(data => data.WC_slab1)
-  const WC_slab2 = result.map(data => data.WC_slab2)
-  const CO2air = result.map(data => data.CO2air)
-  const HumDef = result.map(data => data.HumDef)
-  const Rhair = result.map(data => data.Rhair)
-  const Tair = result.map(data => data.Tair)
-  const EnScr = result.map(data => data.EnScr)
-  const BlackScr = result.map(data => data.BlackScr)
-  const PipeGrow = result.map(data => data.PipeGrow)
-  const PipeLow = result.map(data => data.PipeLow)
-  const Iglob = result.map(data => data.Iglob)
-  const RadSum = result.map(data => data.RadSum)
-  const Tout = result.map(data => data.Tout)
+const LineChart = ({ chartData }) => {
+  const dateTime = chartData.map(data => data.time)
+  const EC_slab1 = chartData.map(data => data.EC_slab1)
+  const EC_slab2 = chartData.map(data => data.EC_slab2)
+  const EC_drain_PC = chartData.map(data => data.EC_drain_PC)
+  const WC_slab1 = chartData.map(data => data.WC_slab1)
+  const WC_slab2 = chartData.map(data => data.WC_slab2)
+  const CO2air = chartData.map(data => data.CO2air)
+  const HumDef = chartData.map(data => data.HumDef)
+  const Rhair = chartData.map(data => data.Rhair)
+  const Tair = chartData.map(data => data.Tair)
+  const EnScr = chartData.map(data => data.EnScr)
+  const BlackScr = chartData.map(data => data.BlackScr)
+  const PipeGrow = chartData.map(data => data.PipeGrow)
+  const PipeLow = chartData.map(data => data.PipeLow)
+  const Iglob = chartData.map(data => data.Iglob)
+  const RadSum = chartData.map(data => data.RadSum)
+  const Tout = chartData.map(data => data.Tout)
 
   const [changeTooltip, setChangeTooltip] = useState(true)
   const options = {
@@ -33,7 +33,7 @@ const LineChart = ({ result }) => {
       text: "chart"
       },
       xAxis: {
-        categories : time
+        categories : dateTime
       },
       series: [
         {
@@ -103,7 +103,6 @@ const LineChart = ({ result }) => {
       ]}
 
   function TooltipSwitch({tooltip}){
-    console.log(tooltip.enabled)
     return function(event){
       return setChangeTooltip(!tooltip.enabled)
     }

@@ -1,7 +1,8 @@
-import Test from "./Test";
+import MainPage from "./MainPage";
+
 function App() {
   return <>
-  <Test />
+  <MainPage />
   </>;
 }
 
