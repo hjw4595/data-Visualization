@@ -1,5 +1,6 @@
+import React from 'react';
 import MainPage from "./MainPage";
-import RootStore from "../../mobx";
+import RootStore from "../Mobx";
 import { Provider } from 'mobx-react';
 
 const root = new RootStore();

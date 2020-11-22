@@ -8,7 +8,7 @@ const CheckList = ({ series, checkItem }) => {
     }
     return(
         <span onClick={checkClick(series.id)} role="img" aria-label="checked">
-            {series.check ? "✅" : "☑"}
+            {series.check ? `✅${series.name}` : `☑${series.name}`}
         </span>
     )
 }           
