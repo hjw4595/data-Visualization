@@ -2,29 +2,33 @@ import React from "react";
 import LineChart from "./highchart/LineChart";
 import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
+import MyChart from "../Components/myChart/MyChart";
 
-const grid = 8;
+const Test = styled.div`
+  display : flex;
+`
 const DataItem = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 99%;
+  align-self: center;
   border: 1px solid grey;
-  margin-bottom: ${grid}px;
-  background-color: lightblue;
-  padding: ${grid}px;
+  background-color: white;
+  padding: 10rem 0 10rem 0;
 `;
 
 function MainPagePresenter({ data, index }) {
   return (
     <Draggable draggableId={data.id} index={index}>
       {provided => (
-        <DataItem
+        <Test>
+          <LineChart chartData={data.content.data}/>
+          <MyChart  chartData={data.content.data} />
+          <DataItem
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-        >
-          <LineChart chartData={data.content.data}/>
-        </DataItem>
+          >
+          <span role="img" aria-label="drag and drop">↕</span>
+          </DataItem>
+        </Test>
       )}
     </Draggable>
   );

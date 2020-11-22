@@ -46,73 +46,57 @@ const LineChart = ({ chartData }) => {
       enabled: changeTooltip
     },
     title : {
-      text: "MY Chart"
+      text: "Data Chart"
       },
       xAxis: {
         categories : dateTime
       },
-      series: [
-        {
+      series: [{
         name: "EC_slab1",
         data : EC_slab1
-      },
-      {
+      },{
         name: "EC_slab2",
         data : EC_slab2
-      },
-      {
+      },{
         name: "EC_drain_PC",
         data : EC_drain_PC
-      },
-      {
+      },{
         name: "WC_slab1",
         data : WC_slab1
-      },
-      {
+      },{
         name: "WC_slab2",
         data : WC_slab2
-      },
-      {
+      },{
         name: "CO2air",
         data : CO2air
-      },
-      {
+      },{
         name: "HumDef",
         data : HumDef
-      },
-      {
+      },{
         name: "Rhair",
         data : Rhair
-      },
-      {
+      },{
         name: "Tair",
         data : Tair
-      },
-      {
+      },{
         name: "EnScr",
         data : EnScr
-      },
-      {
+      },{
         name: "BlackScr",
         data : BlackScr
-      },
-      {
+      },{
         name: "PipeGrow",
         data : PipeGrow
-      },
-      {
+      },{
         name: "PipeLow",
         data : PipeLow
-      },
-      {
+      },{
         name: "Iglob",
         data : Iglob
-      },
-      {
+      },{
         name: "RadSum",
         data : RadSum
-      },
-      {
+      },{
         name: "Tout",
         data : Tout
       }]
