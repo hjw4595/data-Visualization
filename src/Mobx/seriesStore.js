@@ -1,4 +1,4 @@
-import {observable, action } from 'mobx';
+import {observable} from 'mobx';
 
 export default class TodoStore {
       /**
@@ -77,13 +77,4 @@ export default class TodoStore {
       name: "Tout",
       check : false
     }]
-
-    /**
-   * 아이템 체크 
-   * @param id Number
-   */
-  @action checkItem = id => {
-    const changeCheckItem = this.series.map(item => item.id === id ? {...item, check : !item.check} : item )
-    this.series.replace(changeCheckItem);
-}
 }

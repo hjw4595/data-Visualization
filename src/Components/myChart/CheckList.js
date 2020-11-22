@@ -1,16 +1,14 @@
 import React from 'react';
+import { observer } from 'mobx-react';
 
-const CheckList = ({ series, checkItem }) => {
-    function checkClick(id){
-        return function(event){
-            return checkItem(id)
-        }
-    }
-    return(
-        <span onClick={checkClick(series.id)} role="img" aria-label="checked">
-            {series.check ? `✅${series.name}` : `☑${series.name}`}
-        </span>
-    )
-}           
+const CheckList = observer(({series}) => 
+<>
+        <input
+            type="checkbox"
+            checked={series.checked}
+            onClick={() => series.checked = !series.checked}
+        />{series.checked ? series.name : series.name}
+        </>
+);
 
 export default CheckList;
